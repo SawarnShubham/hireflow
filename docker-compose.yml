@@ -1,0 +1,26 @@
+services:
+  backend:
+    build: .
+    container_name: hireflow-backend
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    depends_on:
+      - mongo
+    volumes:
+      - .:/app
+      - /app/node_modules
+    restart: always
+
+  mongo:
+    image: mongo:7
+    container_name: hireflow-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    restart: always
+
+volumes:
+  mongo_data:
